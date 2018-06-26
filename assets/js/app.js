@@ -5,29 +5,21 @@ let config = {
     projectId: "train-scheduler-37f5e",
     storageBucket: "train-scheduler-37f5e.appspot.com",
     messagingSenderId: "266072816832"
-  };
+};
 
-  firebase.initializeApp(config);
+firebase.initializeApp(config);
 
-    //TEST MOMENT.JS:
-    console.log(moment().format('MMMM Do YYYY, h:mm:ss a'));   
+const database = firebase.database();
+const ref = database.ref();
 
-  const database = firebase.database();
-  const ref = database.ref();
-
-  $('#submit').on('click', function(event){
+$('#submit').on('click', function (event) {
 
     event.preventDefault();
 
     let name = $('#train-name').val().trim();
     let dest = $('#dest').val().trim();
-    let first = $('#first-train-time').val().trim();
-    let frequency = $('#frequency').val().trim();
-
-    console.log(name);
-    console.log(dest);
-    console.log(first);
-    console.log(frequency);
+    let first = moment($('#first-train-time').val(), "HH:mm").format("h:mm:ss a");
+    let freq = $('#freq').val().trim();
 
     let newTrain = {
         trainName: name,
@@ -36,14 +28,14 @@ let config = {
         frequency: freq
     };
 
-//     console.log(newTrain);
+    console.log(newTrain);
 
-  ref.push(newTrain);
+    ref.push(newTrain);
 
     $("#train-name").val("");
     $("#dest").val("");
     $("#first-train-time").val("");
-    $("#frequency").val("");
+    $("#freq").val("");
 
 })
 
@@ -57,10 +49,21 @@ ref.on('child_added', function (snapshot) {
     let frequency = value.frequency;
     let firstTrainTime = value.firstTrainTime;
 
-    // let firstTrainSecs = moment()
+    //CONVERT FIRST-TRAIN-TIME into MINUTES/1440 (1)
+    let firstTrainTimeMinutes = moment(firstTrainTime, "h:mm:ss a").format('mm');
+    let firstTrainTimeHour = moment(firstTrainTime, "h:mm:ss a").format('h');
+    let convertHoursToMinutes = firstTrainTimeHour * 60;
+    let minutePastMidnight = parseInt(convertHoursToMinutes) + parseInt(firstTrainTimeMinutes);
+    
+    console.log(firstTrainTimeHour + " = Hours Past Midnight");
+    console.log(firstTrainTimeMinutes + " = Minutes");
+    console.log(minutePastMidnight + " = MINUTES PAST MIDNIGHT OF FIRST TRAIN");
+
+    //RUN TIME NOW AGAINST A FOR LOOP INTERVAL OF TRAIN FREQUENCY UP TO 1440
+    //IF LESS THAN [I] RUN CALCULATIONS:
 
     let now = moment().format('HH:mm');
-    console.log(now);
+    console.log(now + " = TIME NOW");
 
     $('#train-schedule').append(`
         <tr>
@@ -71,5 +74,5 @@ ref.on('child_added', function (snapshot) {
             <td id="minutes-away"> - </td>
         </tr>
     `)
-    
+
 })
