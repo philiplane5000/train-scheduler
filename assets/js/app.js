@@ -109,7 +109,7 @@ let returnMinutesAway = function (firstTrainMins, timeNow, interval) {
 //FUNCTION WILL RETURN TIME OF NEXT TRAIN USING MINUTES AWAY + TIME NOW -- CONVERTED TO AM/PM USING MOMENT.JS
 
 let returnNextArrival = function (minsAway) {
-    let now = moment().format("hh:mm");
-    let nextArrivalTime = moment(now, "hh:mm").add(minsAway, 'm').format('hh:mm A');
+    let now = moment().format("HH:mm");
+    let nextArrivalTime = moment(now, "HH:mm").add(minsAway, 'm').format('hh:mm A');
     return nextArrivalTime;
 }
