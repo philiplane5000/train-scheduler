@@ -12,6 +12,8 @@ firebase.initializeApp(config);
 const database = firebase.database();
 const ref = database.ref();
 
+let nextTrain = 0;
+
 $('#submit').on('click', function (event) {
 
     event.preventDefault();
@@ -53,17 +55,23 @@ ref.on('child_added', function (snapshot) {
     let firstTrainTimeMinutes = moment(firstTrainTime, "h:mm:ss a").format('mm');
     let firstTrainTimeHour = moment(firstTrainTime, "h:mm:ss a").format('h');
     let convertHoursToMinutes = firstTrainTimeHour * 60;
-    let minutePastMidnight = parseInt(convertHoursToMinutes) + parseInt(firstTrainTimeMinutes);
-    
-    console.log(firstTrainTimeHour + " = Hours Past Midnight");
-    console.log(firstTrainTimeMinutes + " = Minutes");
-    console.log(minutePastMidnight + " = MINUTES PAST MIDNIGHT OF FIRST TRAIN");
+    let firstTrainMinutesPastMidnight = parseInt(convertHoursToMinutes) + parseInt(firstTrainTimeMinutes);
 
-    //RUN TIME NOW AGAINST A FOR LOOP INTERVAL OF TRAIN FREQUENCY UP TO 1440
-    //IF LESS THAN [I] RUN CALCULATIONS:
+    console.log(train + " = TRAIN NAME");
+    console.log(firstTrainTime + " = DEPARTS AT")
+    console.log(firstTrainMinutesPastMidnight + " = MINUTES PAST MIDNIGHT OF FIRST TRAIN");
 
+    //CONVERT TIME NOW into MINUTES/1440 (2)
     let now = moment().format('HH:mm');
+    let timeNowHour = moment(now, "HH:mm").format('h');
+    let timeNowHoursToMinutes = timeNowHour * 60;
+    let timeNowMinutes = moment(now, "HH:mm").format('mm');
+    let timeNowMinutesPastMidnight = parseInt(timeNowHoursToMinutes) + parseInt(timeNowMinutes);
+    
     console.log(now + " = TIME NOW");
+    console.log(timeNowMinutesPastMidnight + " = TIME NOW MINUTES PAST MIDNIGHT");
+
+    console.log(returnNextTrain(firstTrainMinutesPastMidnight, timeNowMinutesPastMidnight, frequency));
 
     $('#train-schedule').append(`
         <tr>
@@ -76,3 +84,21 @@ ref.on('child_added', function (snapshot) {
     `)
 
 })
+
+    //FUNCTION WILL RUN TIME NOW IN MINUTES PAST MIDNIGHT AGAINST A FOR LOOP UP TO 1440(MINUTES IN 24 HOURS) WHERE INTERVAL IS EQUAL TO TRAIN FREQUENCY: 
+    let returnNextTrain = function(firstTrainMins, timeNow, interval) {
+
+        let first = parseInt(firstTrainMins);
+        let time = parseInt(timeNow);
+        let int = parseInt(interval);
+
+        for(let m = first; m < 1440; m += int) {
+            if (time < m) {
+                let nextTrain = (m - time);
+                return nextTrain;
+            } else {
+                console.log('TRAIN PASSED');
+            }
+        }
+
+    }
