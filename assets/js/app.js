@@ -67,38 +67,49 @@ ref.on('child_added', function (snapshot) {
     let timeNowHoursToMinutes = timeNowHour * 60;
     let timeNowMinutes = moment(now, "HH:mm").format('mm');
     let timeNowMinutesPastMidnight = parseInt(timeNowHoursToMinutes) + parseInt(timeNowMinutes);
-    
+
     console.log(now + " = TIME NOW");
     console.log(timeNowMinutesPastMidnight + " = TIME NOW MINUTES PAST MIDNIGHT");
 
-    console.log(returnNextTrain(firstTrainMinutesPastMidnight, timeNowMinutesPastMidnight, frequency));
+    console.log(returnMinutesAway(firstTrainMinutesPastMidnight, timeNowMinutesPastMidnight, frequency) + " = NEXT TRAIN MINUTES");
+    let minutesAway = returnMinutesAway(firstTrainMinutesPastMidnight, timeNowMinutesPastMidnight, frequency);
+
+    let nextArrival = returnNextArrival(minutesAway);
 
     $('#train-schedule').append(`
         <tr>
             <td id="train">${train}</td>
             <td id="destination">${destination}</td>
             <td id="frequency">${frequency}</td>
-            <td id="next-arrival"> - </td>
-            <td id="minutes-away"> - </td>
+            <td id="next-arrival"> ${nextArrival} </td>
+            <td id="minutes-away"> ${minutesAway} </td>
         </tr>
     `)
 
 })
 
-    //FUNCTION WILL RUN TIME NOW IN MINUTES PAST MIDNIGHT AGAINST A FOR LOOP UP TO 1440(MINUTES IN 24 HOURS) WHERE INTERVAL IS EQUAL TO TRAIN FREQUENCY: 
-    let returnNextTrain = function(firstTrainMins, timeNow, interval) {
+//FUNCTION WILL RUN TIME NOW IN MINUTES PAST MIDNIGHT AGAINST A FOR LOOP UP TO 1440(MINUTES IN 24 HOURS) WHERE INTERVAL IS EQUAL TO TRAIN FREQUENCY: 
+let returnMinutesAway = function (firstTrainMins, timeNow, interval) {
 
-        let first = parseInt(firstTrainMins);
-        let time = parseInt(timeNow);
-        let int = parseInt(interval);
+    let first = parseInt(firstTrainMins);
+    let time = parseInt(timeNow);
+    let int = parseInt(interval);
 
-        for(let m = first; m < 1440; m += int) {
-            if (time < m) {
-                let nextTrain = (m - time);
-                return nextTrain;
-            } else {
-                console.log('TRAIN PASSED');
-            }
+    for (let m = first; m < 1440; m += int) {
+        if (time < m) {
+            let nextTrain = (m - time);
+            return nextTrain;
+        } else {
+            console.log('TRAIN PASSED');
         }
-
     }
+
+}
+
+//FUNCTION WILL RETURN TIME OF NEXT TRAIN USING MINUTES AWAY + TIME NOW -- CONVERTED TO AM/PM USING MOMENT.JS
+
+let returnNextArrival = function (minsAway) {
+    let now = moment().format("hh:mm");
+    let nextArrivalTime = moment(now, "hh:mm").add(minsAway, 'm').format('hh:mm A');
+    return nextArrivalTime;
+}
