@@ -20,7 +20,7 @@ $('#submit').on('click', function (event) {
 
     let name = $('#train-name').val().trim();
     let dest = $('#dest').val().trim();
-    let first = moment($('#first-train-time').val(), "HH:mm").format("h:mm:ss a");
+    let first = moment($('#first-train-time').val(), "HH:mm").format("HH:mm");
     let freq = $('#freq').val().trim();
 
     let newTrain = {
@@ -52,8 +52,8 @@ ref.on('child_added', function (snapshot) {
     let firstTrainTime = value.firstTrainTime;
 
     //CONVERT FIRST-TRAIN-TIME into MINUTES/1440 (1)
-    let firstTrainTimeMinutes = moment(firstTrainTime, "h:mm:ss a").format('mm');
-    let firstTrainTimeHour = moment(firstTrainTime, "h:mm:ss a").format('h');
+    let firstTrainTimeMinutes = moment(firstTrainTime, "HH:mm").format('mm');
+    let firstTrainTimeHour = moment(firstTrainTime, "HH:mm").format('hh');
     let convertHoursToMinutes = firstTrainTimeHour * 60;
     let firstTrainMinutesPastMidnight = parseInt(convertHoursToMinutes) + parseInt(firstTrainTimeMinutes);
 
@@ -63,7 +63,7 @@ ref.on('child_added', function (snapshot) {
 
     //CONVERT TIME NOW into MINUTES/1440 (2)
     let now = moment().format('HH:mm');
-    let timeNowHour = moment(now, "HH:mm").format('h');
+    let timeNowHour = moment(now, "HH:mm").format('HH');
     let timeNowHoursToMinutes = timeNowHour * 60;
     let timeNowMinutes = moment(now, "HH:mm").format('mm');
     let timeNowMinutesPastMidnight = parseInt(timeNowHoursToMinutes) + parseInt(timeNowMinutes);
