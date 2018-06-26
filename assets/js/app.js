@@ -78,11 +78,11 @@ ref.on('child_added', function (snapshot) {
 
     $('#train-schedule').append(`
         <tr>
-            <td id="train">${train}</td>
-            <td id="destination">${destination}</td>
-            <td id="frequency">${frequency}</td>
-            <td id="next-arrival"> ${nextArrival} </td>
-            <td id="minutes-away"> ${minutesAway} </td>
+            <td id="train" class="text-center">${train}</td>
+            <td id="destination" class="text-center">${destination}</td>
+            <td id="frequency" class="text-center">${frequency}</td>
+            <td id="next-arrival" class="text-center"> ${nextArrival} </td>
+            <td id="minutes-away" class="text-center"> ${minutesAway} </td>
         </tr>
     `)
 
