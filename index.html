@@ -40,7 +40,7 @@
                     </div>
                     <div class="card-body">
 
-                        <table class="table table-bordered table-striped" id="train-schedule">
+                        <table class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th scope="col" class="text-center">Train Name</th>
@@ -50,10 +50,34 @@
                                     <th scope="col" class="text-center">Minutes Away</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="train-schedule">
                                 <!--FILLED DYNAMICALLY WITH TRAIN DATA FROM FIREBASE-->
                             </tbody>
                         </table>
+
+                        <table class="table table-bordered time-to-departure">
+                            <tbody>
+                                <tr>
+                                    <th colspan="2" class="text-center">TIME TO DEPARTURE</th>
+                                </tr>
+                                <tr>
+                                    <!-- <td colspan="3"></td> -->
+                                    <td colspan="1" class="text-center"> < 15 MINUTES</td>
+                                            <td colspan="1" class="thirty"></td>
+                                </tr>
+                                <tr>
+                                    <!-- <td colspan="3"></td> -->
+                                    <td colspan="1" class="text-center"> < 60 MINUTES</td>
+                                    <td colspan="1" class="sixty"></td>
+                                </tr>
+                                <tr>
+                                    <!-- <td colspan="3"></td> -->
+                                    <td colspan="1" class="text-center"> + 60 MINUTES</td>
+                                    <td colspan="1" class="sixty-plus"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
                     </div>
                 </div>
             </div>

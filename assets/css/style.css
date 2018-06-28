@@ -48,6 +48,24 @@
     border-bottom: 2.5px solid #46B29D;
 }
 
+.time-to-departure {
+    position: relative;
+    right: 0;
+    max-width: 50%;
+}
+
+.thirty {
+    background-color: rgba(222,91,73,0.75);
+}
+
+.sixty {
+    background-color: rgba(1,162,175,0.75);
+}
+
+.sixty-plus {
+    background-color:rgba(240,202,77,0.85);
+}
+
 img.bg {
     z-index: -1;
     /* Set rules to fill background */
