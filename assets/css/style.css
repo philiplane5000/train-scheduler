@@ -1,0 +1,85 @@
+/* COLOR THEME: 'CHECKED BAGGAGE'
+#324DSC
+#46B29D
+#FOCA4D
+#E37B40
+#DE5B49 */
+
+.main-content {
+    min-width: 720px;
+    background-color: rgba(250,250,250, 0.65);
+    border-left: 10px solid #F0CA4D;
+    border-right: 10px solid #F0CA4D;
+    border-bottom: 10px solid #F0CA4D;
+    color: #324D5C;
+    margin-bottom: 50px;
+    padding-bottom: 20px;
+}
+
+.jumbotron {
+    background-color: white;
+    border-left: 2.5px solid #46B29D;
+    border-right: 2.5px solid #46B29D;
+    border-bottom: 2.5px solid #46B29D;
+    border-radius: 0 0 10px 10px;
+}
+
+.title-container {
+    color: #324D5C;
+}
+
+.live-schedule-card {
+    min-width: 590px;
+
+    border-top: 7.5px solid #E37B40;
+    border-left: 2.5px solid #E37B40;
+    border-right: 2.5px solid #E37B40;
+    border-bottom: 2.5px solid #E37B40;
+}
+
+.add-train-form {
+    background: whitesmoke;
+    padding: 10px;
+    /* margin-top: 20px; MEDIA QUERY THIS TO SMALLER SCREEN SIZE*/
+
+    border-top: 7.5px solid #46B29D;
+    border-left: 2.5px solid #46B29D;
+    border-right: 2.5px solid #46B29D;
+    border-bottom: 2.5px solid #46B29D;
+}
+
+img.bg {
+    z-index: -1;
+    /* Set rules to fill background */
+    min-height: 100%;
+    min-width: 1024px;
+      
+    /* Set up proportionate scaling */
+    width: 100%;
+    height: auto;
+      
+    /* Set up positioning */
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+  
+  @media screen and (max-width: 1460px) { /* Specific to this particular image */
+    img.bg {
+      left: 50%;
+      margin-left: -512px;   /* 50% */
+    }
+  }
+
+  @media screen and (max-width: 992px) { /*prevent massive jumbotron title*/
+    .add-train-form {
+        margin-top: 20px;
+    }
+}
+
+
+  @media screen and (min-width: 576px) { /*prevent massive jumbotron title*/
+      .jumbotron {
+          padding: 3rem 1rem;
+      }
+  }

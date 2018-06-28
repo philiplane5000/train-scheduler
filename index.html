@@ -4,21 +4,24 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
+    <title>Train Scheduler</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
         crossorigin="anonymous">
-
-    <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" /> -->
+    <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
 </head>
 
 <body>
-    <div class="container">
+
+    <img src="https://images.unsplash.com/photo-1514043016-1076e5413b11?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=e3aa2d412c647e4ec228d6278efca811&auto=format&fit=crop&w=1953&q=80"
+        class="bg">
+
+    <div class="container main-content">
 
         <div class="row">
             <div class="col">
                 <div class="jumbotron jumbotron-fluid pl-4">
-                    <div class="container">
+                    <div class="container title-container">
                         <h1 class="display-5">TRAIN SCHEDULER</h1>
                         <p class="lead">CHEE CHEE. CHOO CHOO.</p>
                     </div>
@@ -27,34 +30,35 @@
         </div>
 
         <div class="row">
-            <div class="col">
-                <table class="table table-bordered table-striped" id="train-schedule">
-                    <thead>
-                        <tr>
-                            <th colspan="6" class="ml-6">
-                                <h4>CURRENT TRAIN SCHEDULE</h4>
-                            </th>
-                        </tr>
-                    </thead>
-                    <thead>
-                        <tr>
-                            <th scope="col" class="text-center">Train Name</th>
-                            <th scope="col" class="text-center">Destination</th>
-                            <th scope="col" class="text-center">Frequency (min)</th>
-                            <th scope="col" class="text-center">Next Arrival</th>
-                            <th scope="col" class="text-center">Minutes Away</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!--FILLED DYNAMICALLY WITH TRAIN DATA FROM FIREBASE-->
-                    </tbody>
-                </table>
+
+            <div class="col col-lg-8 col-md-12 col-sm-12">
+                <div class="card live-schedule-card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <strong>LIVE SCHEDULE</strong>
+                        </h3>
+                    </div>
+                    <div class="card-body">
+
+                        <table class="table table-bordered table-striped" id="train-schedule">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-center">Train Name</th>
+                                    <th scope="col" class="text-center">Destination</th>
+                                    <th scope="col" class="text-center">Frequency (min)</th>
+                                    <th scope="col" class="text-center">Next Arrival</th>
+                                    <th scope="col" class="text-center">Minutes Away</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!--FILLED DYNAMICALLY WITH TRAIN DATA FROM FIREBASE-->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-        </div>
-        <br>
-        <div class="row p-6">
-            <div class="col">
-                <form>
+            <div class="col-lg-4 col-md-8 col-sm-8">
+                <form class="add-train-form rounded">
                     <div class="form-group">
                         <label for="train-name">Train Name</label>
                         <input type="text" class="form-control" id="train-name">
@@ -76,7 +80,6 @@
             </div>
 
         </div>
-
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase.js"></script>
