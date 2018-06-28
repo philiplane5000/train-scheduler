@@ -1,8 +1,12 @@
 # train-scheduler
 
-### Bonus (Extra Challenges)
-
+### FEATURES:
 * "MINUTES AWAY" and "NEXT TRAIN TIME" updates once every minute.
+
+### BUGS / IMPROVEMENTS:
+* Add Train needs a card-title
+
+### Bonus (Extra Challenges):
 
 * Try adding `update` and `remove` buttons for each train. Let the user edit the row's elements-- allow them to change a train's Name, Destination and Arrival Time (and then, by relation, minutes to arrival).
 
