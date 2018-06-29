@@ -120,7 +120,7 @@ function signOut() {
 
 $('.firebaseui-auth-container').on('click', function() {
     $(this).toggleClass('hide');
-}
+})
 
 // END FIREBASE AUTH SETUP //
 
