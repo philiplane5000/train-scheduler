@@ -12,7 +12,7 @@ firebase.initializeApp(config);
 // FIREBASE AUTH CONFIG COPIED OVER:
 
 // FirebaseUI config.
-var uiConfig = {
+let uiConfig = {
   signInSuccessUrl: 'https://philiptd5000.github.io/train-scheduler/',
   signInOptions: [
     // Leave the lines as is for the providers you want to offer your users.
@@ -39,18 +39,18 @@ let provider = new firebase.auth.GoogleAuthProvider();
 //FIREBASE SIGN-IN INITIALIZER:
         // firebase.auth().signInWithPopup(provider).then(function(result) {
         //     // This gives you a Google Access Token. You can use it to access the Google API.
-        //     var token = result.credential.accessToken;
+        //     let token = result.credential.accessToken;
         //     // The signed-in user info.
-        //     var user = result.user;
+        //     let user = result.user;
         //     // ...
         // }).catch(function(error) {
         //     // Handle Errors here.
-        //     var errorCode = error.code;
-        //     var errorMessage = error.message;
+        //     let errorCode = error.code;
+        //     let errorMessage = error.message;
         //     // The email of the user's account used.
-        //     var email = error.email;
+        //     let email = error.email;
         //     // The firebase.auth.AuthCredential type that was used.
-        //     var credential = error.credential;
+        //     let credential = error.credential;
         //     // ...
         // });
 
@@ -62,18 +62,21 @@ let provider = new firebase.auth.GoogleAuthProvider();
   //HERE TO TRACK AUTH STATE ACROSS ALL PAGES:
   initApp = function() {
     firebase.auth().onAuthStateChanged(function(user) {
+
+        let $signOutBtn = $('<div class="sign-out-btn">').on('click', signOut);
+
       if (user) {
         // User is signed in.
-        var displayName = user.displayName;
-        var email = user.email;
-        var emailVerified = user.emailVerified;
-        var photoURL = user.photoURL;
-        var uid = user.uid;
-        var phoneNumber = user.phoneNumber;
-        var providerData = user.providerData;
+        let displayName = user.displayName;
+        let email = user.email;
+        let emailVerified = user.emailVerified;
+        let photoURL = user.photoURL;
+        let uid = user.uid;
+        let phoneNumber = user.phoneNumber;
+        let providerData = user.providerData;
         user.getIdToken().then(function(accessToken) {
           $('#sign-in-status').text('Signed in');
-          $('#sign-in').text('Sign out').on('click', signOut);
+          $('#sign-in').html($signOutBtn);
           $('#account-details').text(JSON.stringify({
             displayName: displayName,
             email: email,
@@ -110,6 +113,10 @@ function signOut(){
     });
 }
 //   END FIREBASE SIGN-OUT//
+
+// END FIREBASE AUTH SETUP //
+
+//TIME SCHEDULER DATABASE AND APP SETUP:
 
 const database = firebase.database();
 const ref = database.ref();
@@ -326,7 +333,7 @@ $('#update-btn').on('click', function (event) {
 
 /* COPIED FROM FIREBASE DOCS UPDATE INSTRUCTIONS:
   // Get a key for a new Post.
-  var newPostKey = firebase.database().ref().child('posts').push().key;
+  let newPostKey = firebase.database().ref().child('posts').push().key;
 */
 
 function renderLiveSchedule(name, dest, freq, nxtArrival, minsToArrival, uniqueID) {
