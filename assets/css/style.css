@@ -37,7 +37,7 @@
     border-bottom: 2.5px solid #E37B40;
 }
 
-.add-train-form {
+.add-train-form, .firebase-members-form {
     background: whitesmoke;
     padding: 10px;
     /* margin-top: 20px; MEDIA QUERY THIS TO SMALLER SCREEN SIZE*/
@@ -48,7 +48,7 @@
     border-bottom: 2.5px solid #46B29D;
 }
 
-#add-train-form-head {
+#add-train-form-head, #firebase-members-head {
     margin: 7.5px 0 15px 10px;
 }
 
