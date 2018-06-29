@@ -77,6 +77,17 @@
     background-color:rgba(240,202,77,0.85);
 }
 
+.update-link {
+    color: #46B29D;
+    font-weight: 600;
+}
+
+.update-link:hover {
+    text-decoration: none;
+    color: #F0CA4D;
+    transition: all .5s;
+}
+
 .display-none {
     display: none;
 }
