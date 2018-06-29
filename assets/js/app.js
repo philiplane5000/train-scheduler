@@ -72,9 +72,9 @@ let provider = new firebase.auth.GoogleAuthProvider();
         var phoneNumber = user.phoneNumber;
         var providerData = user.providerData;
         user.getIdToken().then(function(accessToken) {
-          document.getElementById('sign-in-status').textContent = 'Signed in';
-          document.getElementById('sign-in').textContent = 'Sign out';
-          document.getElementById('account-details').textContent = JSON.stringify({
+          $('#sign-in-status').text('Signed in');
+          $('#sign-in').text('Sign out');
+          $('#account-details').text(JSON.stringify({
             displayName: displayName,
             email: email,
             emailVerified: emailVerified,
@@ -83,13 +83,13 @@ let provider = new firebase.auth.GoogleAuthProvider();
             uid: uid,
             accessToken: accessToken,
             providerData: providerData
-          }, null, '  ');
+          }, null, '  '));
         });
       } else {
         // User is signed out.
-        document.getElementById('sign-in-status').textContent = 'Signed out';
-        document.getElementById('sign-in').textContent = 'Sign in';
-        document.getElementById('account-details').textContent = 'null';
+        $('#sign-in-status').text('Signed out');
+        $('#sign-in').text('Sign in');
+        $('#account-details').text('null');
       }
     }, function(error) {
       console.log(error);
