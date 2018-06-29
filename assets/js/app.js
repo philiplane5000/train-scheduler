@@ -54,12 +54,59 @@ firebase.auth().signInWithPopup(provider).then(function(result) {
     // ...
   });
 
+  if (ui.isPendingRedirect()) {
+    ui.start('#firebaseui-auth-container', uiConfig);
+  }
+
+  //HERE TO TRACK AUTH STATE ACROSS ALL PAGES:
+  initApp = function() {
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        // User is signed in.
+        var displayName = user.displayName;
+        var email = user.email;
+        var emailVerified = user.emailVerified;
+        var photoURL = user.photoURL;
+        var uid = user.uid;
+        var phoneNumber = user.phoneNumber;
+        var providerData = user.providerData;
+        user.getIdToken().then(function(accessToken) {
+          document.getElementById('sign-in-status').textContent = 'Signed in';
+          document.getElementById('sign-in').textContent = 'Sign out';
+          document.getElementById('account-details').textContent = JSON.stringify({
+            displayName: displayName,
+            email: email,
+            emailVerified: emailVerified,
+            phoneNumber: phoneNumber,
+            photoURL: photoURL,
+            uid: uid,
+            accessToken: accessToken,
+            providerData: providerData
+          }, null, '  ');
+        });
+      } else {
+        // User is signed out.
+        document.getElementById('sign-in-status').textContent = 'Signed out';
+        document.getElementById('sign-in').textContent = 'Sign in';
+        document.getElementById('account-details').textContent = 'null';
+      }
+    }, function(error) {
+      console.log(error);
+    });
+  };
+
+  window.addEventListener('load', function() {
+    initApp()
+  });
+  //END TRACK AUTH STATE//
+  
   //FIREBASE SIGN-OUT:
   firebase.auth().signOut().then(function() {
     // Sign-out successful.
   }).catch(function(error) {
     // An error happened.
   });
+  //END FIREBASE SIGN-OUT//
 
 const database = firebase.database();
 const ref = database.ref();
@@ -370,16 +417,3 @@ function returnNextArrival(minsAway) {
         ref.remove(emptyTrain);
     }
 */ //END
-
-// UPDATE PAGE:
-/*
-render the table with update links / buttons
-each button has a click listener:
-
-    * the click listener will hide the submit button on the original form, replace with yellow update button
-    * this new update button will use the form input to ref.set({}) or ref.update({}) (something or other) TARGETTED LOCATION IN DATABASE USING KEY
-    * 
-    * will then trigger pageListenUpdate function
-    * clear or hide the update button
-    * reactivate whatever else that was cancelled out
-*/
