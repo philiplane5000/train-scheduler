@@ -82,6 +82,10 @@
     visibility: hidden;
 }
 
+#firebaseui-auth-container {
+    width: 320px;
+}
+
 img.bg {
     z-index: -1;
     /* Set rules to fill background */

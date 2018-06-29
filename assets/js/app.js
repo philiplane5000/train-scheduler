@@ -74,10 +74,11 @@ let provider = new firebase.auth.GoogleAuthProvider();
         let uid = user.uid;
         let phoneNumber = user.phoneNumber;
         let providerData = user.providerData;
+        let accountDetailsStr;
         user.getIdToken().then(function(accessToken) {
           $('#sign-in-status').text('Signed in');
-          $('#sign-in').html($signOutBtn);
-          $('#account-details').text(JSON.stringify({
+          $('#sign-in').append($signOutBtn);
+          accountDetailsStr = JSON.stringify({
             displayName: displayName,
             email: email,
             emailVerified: emailVerified,
@@ -86,7 +87,7 @@ let provider = new firebase.auth.GoogleAuthProvider();
             uid: uid,
             accessToken: accessToken,
             providerData: providerData
-          }, null, '  '));
+          }, null, '  ');
         });
       } else {
         // User is signed out.
