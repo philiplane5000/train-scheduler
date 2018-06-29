@@ -90,9 +90,12 @@
     visibility: hidden;
 }
 
-#firebaseui-auth-container {
-    width: 320px;
+#firebase-auth-container {
+    margin-top: 25px;
 }
+/* #firebaseui-auth-container {
+    width: 320px;
+} */
 
 img.bg {
     z-index: -1;

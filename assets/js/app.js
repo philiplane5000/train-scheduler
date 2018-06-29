@@ -13,18 +13,18 @@ firebase.initializeApp(config);
 
 // FirebaseUI config.
 let uiConfig = {
-  signInSuccessUrl: 'https://philiptd5000.github.io/train-scheduler/',
-  signInOptions: [
-    // Leave the lines as is for the providers you want to offer your users.
-    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-    // firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-    // firebase.auth.TwitterAuthProvider.PROVIDER_ID,
-    // firebase.auth.GithubAuthProvider.PROVIDER_ID,
-    // firebase.auth.EmailAuthProvider.PROVIDER_ID,
-    // firebase.auth.PhoneAuthProvider.PROVIDER_ID
-  ],
-  // Terms of service url.
-  tosUrl: 'https://www.google.com/'
+    signInSuccessUrl: 'https://philiptd5000.github.io/train-scheduler/',
+    signInOptions: [
+        // Leave the lines as is for the providers you want to offer your users.
+        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+        // firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+        // firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+        // firebase.auth.GithubAuthProvider.PROVIDER_ID,
+        // firebase.auth.EmailAuthProvider.PROVIDER_ID,
+        // firebase.auth.PhoneAuthProvider.PROVIDER_ID
+    ],
+    // Terms of service url.
+    tosUrl: 'https://www.google.com/'
 };
 
 // Initialize the FirebaseUI Widget using Firebase.
@@ -37,33 +37,33 @@ ui.start('#firebaseui-auth-container', uiConfig);
 let provider = new firebase.auth.GoogleAuthProvider();
 
 //FIREBASE SIGN-IN INITIALIZER:
-        // firebase.auth().signInWithPopup(provider).then(function(result) {
-        //     // This gives you a Google Access Token. You can use it to access the Google API.
-        //     let token = result.credential.accessToken;
-        //     // The signed-in user info.
-        //     let user = result.user;
-        //     // ...
-        // }).catch(function(error) {
-        //     // Handle Errors here.
-        //     let errorCode = error.code;
-        //     let errorMessage = error.message;
-        //     // The email of the user's account used.
-        //     let email = error.email;
-        //     // The firebase.auth.AuthCredential type that was used.
-        //     let credential = error.credential;
-        //     // ...
-        // });
+// firebase.auth().signInWithPopup(provider).then(function(result) {
+//     // This gives you a Google Access Token. You can use it to access the Google API.
+//     let token = result.credential.accessToken;
+//     // The signed-in user info.
+//     let user = result.user;
+//     // ...
+// }).catch(function(error) {
+//     // Handle Errors here.
+//     let errorCode = error.code;
+//     let errorMessage = error.message;
+//     // The email of the user's account used.
+//     let email = error.email;
+//     // The firebase.auth.AuthCredential type that was used.
+//     let credential = error.credential;
+//     // ...
+// });
 
-        // if (ui.isPendingRedirect()) {
-        //     ui.start('#firebaseui-auth-container', uiConfig);
-        // }
+// if (ui.isPendingRedirect()) {
+//     ui.start('#firebaseui-auth-container', uiConfig);
+// }
 //END FIREBASE SIGN-IN WITH POP UP + IF PENDING SNIPPET//
 
-  //HERE TO TRACK AUTH STATE ACROSS ALL PAGES:
-  initApp = function() {
-    firebase.auth().onAuthStateChanged(function(user) {
+//HERE TO TRACK AUTH STATE ACROSS ALL PAGES:
+initApp = function () {
+    firebase.auth().onAuthStateChanged(function (user) {
 
-        
+
         if (user) {
             // User is signed in.
             let displayName = user.displayName;
@@ -74,42 +74,42 @@ let provider = new firebase.auth.GoogleAuthProvider();
             let phoneNumber = user.phoneNumber;
             let providerData = user.providerData;
             let accountDetailsStr;
-            user.getIdToken().then(function(accessToken) {
+            user.getIdToken().then(function (accessToken) {
                 let $signOutBtn = $('<button class="btn btn-danger">Sign Out</button>').on('click', signOut);
                 $('#sign-in-status').text('Signed in');
                 $('#sign-in').html($signOutBtn);
                 accountDetailsStr = JSON.stringify({
                     displayName: displayName,
-            email: email,
-            emailVerified: emailVerified,
-            phoneNumber: phoneNumber,
-            photoURL: photoURL,
-            uid: uid,
-            accessToken: accessToken,
-            providerData: providerData
-          }/*, null, '  '*/);
-        });
-      } else {
-        // User is signed out.
-        $('#sign-in-status').text('Signed out');
-        $('#sign-in').append($signOutBtn);
-        $('#account-details').text('null');
-      }
-    }, function(error) {
-      console.log(error);
+                    email: email,
+                    emailVerified: emailVerified,
+                    phoneNumber: phoneNumber,
+                    photoURL: photoURL,
+                    uid: uid,
+                    accessToken: accessToken,
+                    providerData: providerData
+                }/*, null, '  '*/);
+            });
+        } else {
+            // User is signed out.
+            $('#sign-in-status').text('Signed out');
+            $('#sign-in').text('Sign-in');
+            $('#account-details').text('null');
+        }
+    }, function (error) {
+        console.log(error);
     });
-  };
+};
 
-  window.addEventListener('load', function() {
+window.addEventListener('load', function () {
     initApp()
-  });
-  //END TRACK AUTH STATE//
-  
+});
+//END TRACK AUTH STATE//
+
 //   FIREBASE SIGN-OUT:
-function signOut(){
-    firebase.auth().signOut().then(function() {
+function signOut() {
+    firebase.auth().signOut().then(function () {
         console.log('SIGN-OUT SUCCESS');
-    }).catch(function(error) {
+    }).catch(function (error) {
         console.log(error);
     });
 }
@@ -305,18 +305,18 @@ $('#update-btn').on('click', function (event) {
     let $freq = $('#freq').val().trim();
 
     database.ref(`/${uniqueID}`).update({
-       trainName: $name,
-       destination: $dest,
-       firstTrainTime: $first,
-       frequency: $freq
-      }, function(error) {
+        trainName: $name,
+        destination: $dest,
+        firstTrainTime: $first,
+        frequency: $freq
+    }, function (error) {
         if (error) {
-          console.log("The write failed...");
+            console.log("The write failed...");
         } else {
-          console.log("Data saved successfully!"); 
+            console.log("Data saved successfully!");
         }
-      });
-    
+    });
+
     //HERE WE NEED TO PUSH THE UPDATED TRAIN, USING THE UNIQUE ID THAT HAS BEEN SET GLOBALLY(?)
 
     $("#train-name").val("").attr('placeholder', '');
