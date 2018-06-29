@@ -48,6 +48,14 @@
     border-bottom: 2.5px solid #46B29D;
 }
 
+#add-train-form-head {
+    margin: 7.5px 0 15px 10px;
+}
+
+.form-update-span {
+    width: 215px;
+}
+
 .time-to-departure {
     position: relative;
     right: 0;
@@ -64,6 +72,14 @@
 
 .sixty-plus {
     background-color:rgba(240,202,77,0.85);
+}
+
+.display-none {
+    display: none;
+}
+
+.hide {
+    visibility: hidden;
 }
 
 img.bg {

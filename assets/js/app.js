@@ -15,6 +15,7 @@ const ref = database.ref();
 let nextTrain = 0;
 let pageTimeout;
 let pageUpdateInt;
+let uniqueID;
 
 $('#submit').on('click', function (event) {
 
@@ -32,9 +33,7 @@ $('#submit').on('click', function (event) {
         frequency: freq
     };
 
-    console.log(newTrain);
-
-    ref.push(newTrain);
+    ref.push(newTrain)
 
     $("#train-name").val("");
     $("#dest").val("");
@@ -44,8 +43,12 @@ $('#submit').on('click', function (event) {
 })
 
 ref.on('child_added', function (snapshot) {
+    // console.log(Object.entries(snapshot));
     //SIMPLIFY:
     let value = snapshot.val();
+    // let valueKeys = Object.keys(value);
+    // console.log(value);
+    // console.log(valueKeys);
 
     //RETRIEVE VALUES FROM DATABASE:
     let train = value.trainName;
@@ -59,9 +62,9 @@ ref.on('child_added', function (snapshot) {
     let convertHoursToMinutes = firstTrainTimeHour * 60;
     let firstTrainMinutesPastMidnight = parseInt(convertHoursToMinutes) + parseInt(firstTrainTimeMinutes);
 
-    console.log(train + " = TRAIN NAME");
-    console.log(firstTrainTime + " = DEPARTURE TIME")
-    console.log(firstTrainMinutesPastMidnight + " = MINUTES PAST MIDNIGHT OF FIRST TRAIN");
+    // console.log(train + " = TRAIN NAME");
+    // console.log(firstTrainTime + " = DEPARTURE TIME")
+    // console.log(firstTrainMinutesPastMidnight + " = MINUTES PAST MIDNIGHT OF FIRST TRAIN");
 
     //CONVERT TIME NOW into MINUTES/1440 (2)
     let now = moment().format('HH:mm');
@@ -70,53 +73,25 @@ ref.on('child_added', function (snapshot) {
     let timeNowMinutes = moment(now, "HH:mm").format('mm');
     let timeNowMinutesPastMidnight = parseInt(timeNowHoursToMinutes) + parseInt(timeNowMinutes);
 
-    console.log(now + " = TIME NOW");
-    console.log(timeNowMinutesPastMidnight + " = TIME NOW MINUTES PAST MIDNIGHT");
+    // console.log(now + " = TIME NOW");
+    // console.log(timeNowMinutesPastMidnight + " = TIME NOW MINUTES PAST MIDNIGHT");
 
-    console.log(returnMinutesAway(firstTrainMinutesPastMidnight, timeNowMinutesPastMidnight, frequency) + " = NEXT TRAIN MINUTES");
+    // console.log(returnMinutesAway(firstTrainMinutesPastMidnight, timeNowMinutesPastMidnight, frequency) + " = NEXT TRAIN MINUTES");
     let minutesAway = returnMinutesAway(firstTrainMinutesPastMidnight, timeNowMinutesPastMidnight, frequency);
 
     let nextArrival = returnNextArrival(minutesAway);
 
-    if(minutesAway <= 15 && !(minutesAway >= 15) ) {
-        $('#train-schedule').append(`
-        <tr>
-            <td id="train" class="text-center thirty">${train}</td>
-            <td id="destination" class="text-center thirty">${destination}</td>
-            <td id="frequency" class="text-center thirty">${frequency}</td>
-            <td id="next-arrival" class="text-center thirty"> ${nextArrival} </td>
-            <td id="minutes-away" class="text-center thirty"> ${minutesAway} </td>
-        </tr>
-    `)
-    } else if (minutesAway > 15 && minutesAway <= 60) {
-        $('#train-schedule').append(`
-                <tr>
-                    <td id="train" class="text-center sixty">${train}</td>
-                    <td id="destination" class="text-center sixty">${destination}</td>
-                    <td id="frequency" class="text-center sixty">${frequency}</td>
-                    <td id="next-arrival" class="text-center sixty"> ${nextArrival} </td>
-                    <td id="minutes-away" class="text-center sixty"> ${minutesAway} </td>
-                </tr>
-            `)
-    } else {
-        $('#train-schedule').append(`
-        <tr>
-            <td id="train" class="text-center sixty-plus">${train}</td>
-            <td id="destination" class="text-center sixty-plus">${destination}</td>
-            <td id="frequency" class="text-center sixty-plus">${frequency}</td>
-            <td id="next-arrival" class="text-center sixty-plus"> ${nextArrival} </td>
-            <td id="minutes-away" class="text-center sixty-plus"> ${minutesAway} </td>
-        </tr>
-    `)
-    }
+    uniqueID = "temp-blank";
 
+    renderLiveSchedule(train, destination, frequency, nextArrival, minutesAway, uniqueID);
 
 });
 
 triggerTimers();
 
 function triggerTimers() {
-    pageTimeout = setTimeout(startInterval, 1000);
+    pageTimeout = setTimeout(startInterval, 10);
+    valueListenPageUpdate();
 }
 
 function startInterval() {
@@ -126,18 +101,20 @@ function startInterval() {
 function valueListenPageUpdate() {
     ref.on('value', function (snapshot) {
 
-        console.log(typeof snapshot.val());
-
-        // SIMPLIFY:
-
         $('#train-schedule').empty();
 
         let valueObj = snapshot.val();
         let allTrains = Object.values(valueObj);
+        let valueKeys = Object.keys(valueObj);
 
+        //TRYING TO PARSE DATA RECEIVED AND ASSIGN THE UPDATED TRAINS THEIR UNIQUE IDS...
+        console.log("ALL TRAINS:");
         console.log(allTrains);
+        console.log("OBJECT KEYS:");
+        console.log(valueKeys);
 
-        //BELOW IS COPIED OVER FROM .ON('CHILD-ADDED')... WILL NEED TO TWEAK USING FOR-EACH TO UPDATE PAGE!!!
+
+        //BELOW IS COPIED OVER FROM .ON('CHILD-ADDED')... POSSIBLY WILL NEED TO WRITE A SINGLE FUNCTION TO REPLICATE:
         for (let i = 0; i < allTrains.length; i++) {
 
             //RETRIEVE UPDATED VALUES FROM DATABASE:
@@ -145,15 +122,15 @@ function valueListenPageUpdate() {
             let destinationUpdated = allTrains[i].destination;
             let frequencyUpdated = allTrains[i].frequency;
             let firstTrainTimeUpdated = allTrains[i].firstTrainTime;
+            let trainUniqueID = valueKeys[i];
+
+            //RETRIEVE ID FOR UPDATE BUTTON(?)
 
             console.log(trainUpdated);
             console.log(destinationUpdated);
             console.log(frequencyUpdated);
             console.log(firstTrainTimeUpdated);
-
-            //INSTEAD OF WET CODE I CAN CREATE A FUNCTION AT THIS POINT (I THINK)... AFTER VARIABLES HAVE BEEN ESTABLISHED FROM DATABASE
-            // (1) ABOVE FROM THE CHILD-ADDED LISTENER...
-            // (2) THIS TIME FROM THE VALUE LISTENER...
+            console.log(trainUniqueID);
 
             //CONVERT FIRST-TRAIN-TIME into MINUTES/1440 (1)
             let firstTrainTimeMinutes = moment(firstTrainTimeUpdated, "HH:mm").format('mm');
@@ -161,9 +138,9 @@ function valueListenPageUpdate() {
             let convertHoursToMinutes = firstTrainTimeHour * 60;
             let firstTrainMinutesPastMidnight = parseInt(convertHoursToMinutes) + parseInt(firstTrainTimeMinutes);
 
-            console.log(trainUpdated + " = TRAIN NAME");
-            console.log(firstTrainTimeUpdated + " = DEPARTURE TIME")
-            console.log(firstTrainMinutesPastMidnight + " = MINUTES PAST MIDNIGHT OF FIRST TRAIN");
+            // console.log(trainUpdated + " = TRAIN NAME");
+            // console.log(firstTrainTimeUpdated + " = DEPARTURE TIME")
+            // console.log(firstTrainMinutesPastMidnight + " = MINUTES PAST MIDNIGHT OF FIRST TRAIN");
 
             //CONVERT TIME NOW into MINUTES/1440 (2)
             let now = moment().format('HH:mm');
@@ -172,63 +149,132 @@ function valueListenPageUpdate() {
             let timeNowMinutes = moment(now, "HH:mm").format('mm');
             let timeNowMinutesPastMidnight = parseInt(timeNowHoursToMinutes) + parseInt(timeNowMinutes);
 
-            console.log(now + " = TIME NOW");
+            // console.log(now + " = TIME NOW");
 
             let minutesAway = returnMinutesAway(firstTrainMinutesPastMidnight, timeNowMinutesPastMidnight, frequencyUpdated);
             let nextArrival = returnNextArrival(minutesAway);
 
-            if(minutesAway <= 15 && !(minutesAway >= 15) ) {
-                $('#train-schedule').append(`
-                <tr>
-                    <td id="train" class="text-center thirty">${trainUpdated}</td>
-                    <td id="destination" class="text-center thirty">${destinationUpdated}</td>
-                    <td id="frequency" class="text-center thirty">${frequencyUpdated}</td>
-                    <td id="next-arrival" class="text-center thirty"> ${nextArrival} </td>
-                    <td id="minutes-away" class="text-center thirty"> ${minutesAway} </td>
-                </tr>
-            `)
-            } else if (minutesAway > 15 && minutesAway <= 60) {
-                $('#train-schedule').append(`
-                        <tr>
-                            <td id="train" class="text-center sixty">${trainUpdated}</td>
-                            <td id="destination" class="text-center sixty">${destinationUpdated}</td>
-                            <td id="frequency" class="text-center sixty">${frequencyUpdated}</td>
-                            <td id="next-arrival" class="text-center sixty"> ${nextArrival} </td>
-                            <td id="minutes-away" class="text-center sixty"> ${minutesAway} </td>
-                        </tr>
-                    `)
-            } else {
-                $('#train-schedule').append(`
-                <tr>
-                    <td id="train" class="text-center sixty-plus">${trainUpdated}</td>
-                    <td id="destination" class="text-center sixty-plus">${destinationUpdated}</td>
-                    <td id="frequency" class="text-center sixty-plus">${frequencyUpdated}</td>
-                    <td id="next-arrival" class="text-center sixty-plus"> ${nextArrival} </td>
-                    <td id="minutes-away" class="text-center sixty-plus"> ${minutesAway} </td>
-                </tr>
-            `)
-            }
+            renderLiveSchedule(trainUpdated, destinationUpdated, frequencyUpdated, nextArrival, minutesAway, trainUniqueID);
+
         }
     });
 }
 
-// function falseAdd() {
-//     let emptyTrain = {
-//         trainName: "-",
-//         destination: "-",
-//         firstTrainTime: "-",
-//         frequency: "-"
-//     };
-//     // console.log(emptyTrain);
-//     ref.push(emptyTrain, function (error) {
-//         if (error) {
-//             console.log(error);
-//         } else {
-//             console.log("FALSE ADD SUCCESS");
-//         }
-//     });
-//     ref.remove(emptyTrain);
-// }
+$('body').on('click', '.update-link', function () {
+
+    uniqueID = $(this).attr('data-id');
+
+    let $name = $(this).attr('data-attribute');
+    $('#train-name').val($name);
+
+    let $updateBtn = $('#update-btn');
+    $updateBtn.toggleClass('hide');
+
+    $('#dest').attr('placeholder', 'e.g. Boston')
+    $('#first-train-time').attr('placeholder', 'e.g. 18:50')
+    $('#freq').attr('placeholder', 'e.g. 35')
+
+    //deactivate submit button(?)
+
+})
+
+$('#update-btn').on('click', function (event) {
+
+    event.preventDefault();
+
+    console.log("UNIQUE ID FOR QUERY:");
+    console.log(uniqueID);
+
+    $(this).toggleClass('hide');
+
+
+    //CAN INCLUDE SOME LOGIC HERE THAT WILL CHECK IF VALUES ARE EMPTY AND PULL ORIGINAL VALUES IF THEY ARE:
+    let $name = $('#train-name').val().trim();
+    let $dest = $('#dest').val().trim();
+    let $first = moment($('#first-train-time').val(), "HH:mm").format("HH:mm");
+    let $freq = $('#freq').val().trim();
+
+    database.ref(`/${uniqueID}`).update({
+       trainName: $name,
+       destination: $dest,
+       firstTrainTime: $first,
+       frequency: $freq
+      }, function(error) {
+        if (error) {
+          console.log("The write failed...");
+        } else {
+          console.log("Data saved successfully!"); 
+        }
+      });
+    
+
+    //HERE WE NEED TO PUSH THE UPDATED TRAIN, USING THE UNIQUE ID THAT HAS BEEN SET GLOBALLY(?)
+
+
+    $("#train-name").val("").attr('placeholder', '');
+    $("#dest").val("").attr('placeholder', '');
+    $("#first-train-time").val("").attr('placeholder', '');
+    $("#freq").val("").attr('placeholder', '');
+
+    valueListenPageUpdate()
+
+
+
+
+})
+
+
+/* COPIED FROM FIREBASE DOCS UPDATE INSTRUCTIONS:
+  // Get a key for a new Post.
+  var newPostKey = firebase.database().ref().child('posts').push().key;
+*/
+
+function renderLiveSchedule(name, dest, freq, nxtArrival, minsToArrival, uniqueID) {
+
+    // let $updateNameLink = $('<p>').attr('data-attribute', `${name}`).html('UPDATE');
+    let $updateNameLink = $(`<a href="#" data-attribute="${name}" data-id="${uniqueID}" class="update-link">UPDATE</p>`);
+
+    // console.log($updateNameLink);
+
+
+    if (minsToArrival <= 15 && !(minsToArrival >= 15)) {
+        $('#train-schedule').append(`
+            <tr>
+                <td id="train" class="text-center thirty">${name}</td>
+                <td id="destination" class="text-center thirty">${dest}</td>
+                <td id="frequency" class="text-center thirty">${freq}</td>
+                <td id="next-arrival" class="text-center thirty"> ${nxtArrival} </td>
+                <td id="minutes-away" class="text-center thirty"> ${minsToArrival} </td>
+                <td id="update" class="text-center">${$updateNameLink[0].outerHTML}</td>
+            </tr>
+        `);
+
+    } else if (minsToArrival > 15 && minsToArrival <= 60) {
+        $('#train-schedule').append(`
+            <tr>
+                <td id="train" class="text-center sixty">${name}</td>
+                <td id="destination" class="text-center sixty">${dest}</td>
+                <td id="frequency" class="text-center sixty">${freq}</td>
+                <td id="next-arrival" class="text-center sixty"> ${nxtArrival} </td>
+                <td id="minutes-away" class="text-center sixty"> ${minsToArrival} </td> 
+                <td id="update" class="text-center">${$updateNameLink[0].outerHTML}</td>               
+            </tr>
+        `);
+
+    } else {
+        $('#train-schedule').append(`
+            <tr>
+                <td id="train" class="text-center sixty-plus">${name}</td>
+                <td id="destination" class="text-center sixty-plus">${dest}</td>
+                <td id="frequency" class="text-center sixty-plus">${freq}</td>
+                <td id="next-arrival" class="text-center sixty-plus"> ${nxtArrival} </td>
+                <td id="minutes-away" class="text-center sixty-plus"> ${minsToArrival} </td>
+                <td id="update" class="text-center">${$updateNameLink[0].outerHTML}</td>
+            </tr>
+        `)
+    }
+
+}
 
 //FUNCTION WILL RUN TIME NOW IN MINUTES PAST MIDNIGHT AGAINST A FOR LOOP UP TO 1440(MINUTES IN 24 HOURS) WHERE INTERVAL IS EQUAL TO TRAIN FREQUENCY: 
 function returnMinutesAway(firstTrainMins, timeNow, interval) {
@@ -249,9 +295,41 @@ function returnMinutesAway(firstTrainMins, timeNow, interval) {
 }
 
 //FUNCTION WILL RETURN TIME OF NEXT TRAIN USING MINUTES AWAY + TIME NOW -- CONVERTED TO AM/PM USING MOMENT.JS
-
 function returnNextArrival(minsAway) {
     let now = moment().format("HH:mm");
     let nextArrivalTime = moment(now, "HH:mm").add(minsAway, 'm').format('hh:mm A');
     return nextArrivalTime;
 }
+
+/* FIRST ATTEMPT TO TRICK .ON('CHILD-ADDED') INTO UPDATING PAGE:
+    function falseAdd() {
+        let emptyTrain = {
+            trainName: "-",
+            destination: "-",
+            firstTrainTime: "-",
+            frequency: "-"
+        };
+        // console.log(emptyTrain);
+        ref.push(emptyTrain, function (error) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log("FALSE ADD SUCCESS");
+            }
+        });
+        ref.remove(emptyTrain);
+    }
+*/ //END
+
+// UPDATE PAGE:
+/*
+render the table with update links / buttons
+each button has a click listener:
+
+    * the click listener will hide the submit button on the original form, replace with yellow update button
+    * this new update button will use the form input to ref.set({}) or ref.update({}) (something or other) TARGETTED LOCATION IN DATABASE USING KEY
+    * 
+    * will then trigger pageListenUpdate function
+    * clear or hide the update button
+    * reactivate whatever else that was cancelled out
+*/
