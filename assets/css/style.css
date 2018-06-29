@@ -37,11 +37,6 @@
     border-bottom: 2.5px solid #E37B40;
 }
 
-/* .firebase-ui-container {
-    width: 340px;
-    display: flex;
-} */
-
 .add-train-form, .firebase-members-form {
     background: whitesmoke;
     padding: 10px;
@@ -90,12 +85,9 @@
     visibility: hidden;
 }
 
-#firebase-auth-container {
+.firebase-ui-container {
     margin-top: 25px;
 }
-/* #firebaseui-auth-container {
-    width: 320px;
-} */
 
 img.bg {
     z-index: -1;
