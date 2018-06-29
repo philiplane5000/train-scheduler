@@ -63,23 +63,23 @@ let provider = new firebase.auth.GoogleAuthProvider();
   initApp = function() {
     firebase.auth().onAuthStateChanged(function(user) {
 
-        let $signOutBtn = $('<button class="btn btn-danger">Sign Out</button>').on('click', signOut);
-
-      if (user) {
-        // User is signed in.
-        let displayName = user.displayName;
-        let email = user.email;
-        let emailVerified = user.emailVerified;
-        let photoURL = user.photoURL;
-        let uid = user.uid;
-        let phoneNumber = user.phoneNumber;
-        let providerData = user.providerData;
-        let accountDetailsStr;
-        user.getIdToken().then(function(accessToken) {
-          $('#sign-in-status').text('Signed in');
-          $('#sign-in').html($signOutBtn);
-          accountDetailsStr = JSON.stringify({
-            displayName: displayName,
+        
+        if (user) {
+            // User is signed in.
+            let displayName = user.displayName;
+            let email = user.email;
+            let emailVerified = user.emailVerified;
+            let photoURL = user.photoURL;
+            let uid = user.uid;
+            let phoneNumber = user.phoneNumber;
+            let providerData = user.providerData;
+            let accountDetailsStr;
+            user.getIdToken().then(function(accessToken) {
+                let $signOutBtn = $('<button class="btn btn-danger">Sign Out</button>').on('click', signOut);
+                $('#sign-in-status').text('Signed in');
+                $('#sign-in').html($signOutBtn);
+                accountDetailsStr = JSON.stringify({
+                    displayName: displayName,
             email: email,
             emailVerified: emailVerified,
             phoneNumber: phoneNumber,

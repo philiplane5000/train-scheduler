@@ -52,6 +52,10 @@
     border-bottom: 2.5px solid #46B29D;
 }
 
+.firebase-members-form {
+    margin-top: 25px;
+}
+
 #add-train-form-head, #firebase-members-head {
     margin: 7.5px 0 15px 10px;
 }
