@@ -36,7 +36,7 @@ ui.start('#firebaseui-auth-container', uiConfig);
 
 let provider = new firebase.auth.GoogleAuthProvider();
 
-//FIREBASE SIGN-IN INITIALIZER:
+// FIREBASE SIGN-IN INITIALIZER:
 // firebase.auth().signInWithPopup(provider).then(function(result) {
 //     // This gives you a Google Access Token. You can use it to access the Google API.
 //     let token = result.credential.accessToken;
@@ -101,7 +101,7 @@ initApp = function () {
 };
 
 window.addEventListener('load', function () {
-    initApp()
+    initApp();
 });
 
 //END TRACK AUTH STATE//
@@ -120,7 +120,7 @@ function signOut() {
 
 $('.firebaseui-auth-container').on('click', function() {
     $(this).addClass('hide');
-})
+});
 
 // END FIREBASE AUTH SETUP //
 
