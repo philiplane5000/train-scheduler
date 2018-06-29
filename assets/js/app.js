@@ -75,9 +75,27 @@ initApp = function () {
             let providerData = user.providerData;
             let accountDetailsStr;
             user.getIdToken().then(function (accessToken) {
-                let $signOutBtn = $('<button class="btn btn-danger">Sign Out</button>').on('click', signOut);
-                $('#sign-in-status').text('Signed in');
-                $('#sign-in').html($signOutBtn);
+                //HIDE THE SIGN-IN FIREBASE AUTH DIVS:
+                $('.firebaseui-auth-container').toggleClass('hide');
+                $('#sign-in-status').toggleClass('hide');
+                $('#sign-in').toggleClass('hide');
+
+                //CREATE ELEMENTS TO DISPLAY HERE:
+                //STARTING WITH CONTINER DIV:
+                let $signedInUserDiv = $('<div>').addClass('signed-in-user');
+                //CONTENTS OF DIV HERE:
+                let $userProfilePic = $(`<img src="${photoURL}" class="user-profile-pic">`);
+                let $userName = $(`<h6 class="display-name">${displayName}</h6>`);
+                let $signOutBtn = $('<button class="btn btn-sm btn-danger">Sign Out</button>')
+                    .addClass('sign-out-btn').on('click', signOut);
+                //APPEND CONTENTS TO DIV CONTAINER HERE:
+                $($signedInUserDiv).append($userProfilePic);
+                $($signedInUserDiv).append($userName);
+                $($signedInUserDiv).append($signOutBtn);
+
+                //APPEND THEM HERE:
+                // $('#sign-in-status').text('Signed in');
+                $('#google-profile-target').html($signedInUserDiv);
                 accountDetailsStr = JSON.stringify({
                     displayName: displayName,
                     email: email,
@@ -93,7 +111,6 @@ initApp = function () {
             // User is signed out.
             $('#sign-in-status').text('Signed out');
             $('#sign-in').text('Sign-in');
-            $('#account-details').text('null');
         }
     }, function (error) {
         console.log(error);
@@ -118,7 +135,7 @@ function signOut() {
 }
 //   END FIREBASE SIGN-OUT//
 
-$('.firebaseui-auth-container').on('click', function() {
+$('.firebaseui-auth-container').on('click', function () {
     $(this).addClass('hide');
 });
 

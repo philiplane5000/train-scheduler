@@ -85,9 +85,39 @@
     visibility: hidden;
 }
 
+/* FIREBASE AUTH UI STYLES HERE:  */
+
 .firebase-ui-container {
     margin-top: 25px;
 }
+
+.signed-in-user {
+    margin-left: 20px;
+    width: 320px;
+    display: block;
+}
+
+.user-profile-pic {
+    margin-left: 5px;
+    display: block;
+    width: 200px;
+    height: 200px;
+    border: 1px solid lightslategray;
+    border-radius: 10px;
+}
+
+.display-name {
+    margin-left: 5px;
+    line-height: 35px;
+    font-weight: 500;
+}
+
+.sign-out-btn {
+    margin-left: 20px;
+}
+/* FIREBASE AUTH UI STYLES END// */
+
+/* RESPONSIVE BACKGROUND IMAGE: */
 
 img.bg {
     z-index: -1;
