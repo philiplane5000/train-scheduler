@@ -102,9 +102,9 @@ firebase.auth().signInWithPopup(provider).then(function(result) {
   
   //FIREBASE SIGN-OUT:
   firebase.auth().signOut().then(function() {
-    // Sign-out successful.
-  }).catch(function(error) {
-    // An error happened.
+    console.log('SIGN-OUT SUCCESS');
+}).catch(function(error) {
+    console.log(error);
   });
   //END FIREBASE SIGN-OUT//
 
