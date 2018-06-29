@@ -28,7 +28,7 @@ var uiConfig = {
 };
 
 // Initialize the FirebaseUI Widget using Firebase.
-var ui = new firebaseui.auth.AuthUI(firebase.auth());
+let ui = new firebaseui.auth.AuthUI(firebase.auth());
 // The start method will wait until the DOM is loaded.
 ui.start('#firebaseui-auth-container', uiConfig);
 
@@ -37,26 +37,27 @@ ui.start('#firebaseui-auth-container', uiConfig);
 let provider = new firebase.auth.GoogleAuthProvider();
 
 //FIREBASE SIGN-IN INITIALIZER:
-firebase.auth().signInWithPopup(provider).then(function(result) {
-    // This gives you a Google Access Token. You can use it to access the Google API.
-    var token = result.credential.accessToken;
-    // The signed-in user info.
-    var user = result.user;
-    // ...
-  }).catch(function(error) {
-    // Handle Errors here.
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    // The email of the user's account used.
-    var email = error.email;
-    // The firebase.auth.AuthCredential type that was used.
-    var credential = error.credential;
-    // ...
-  });
+        // firebase.auth().signInWithPopup(provider).then(function(result) {
+        //     // This gives you a Google Access Token. You can use it to access the Google API.
+        //     var token = result.credential.accessToken;
+        //     // The signed-in user info.
+        //     var user = result.user;
+        //     // ...
+        // }).catch(function(error) {
+        //     // Handle Errors here.
+        //     var errorCode = error.code;
+        //     var errorMessage = error.message;
+        //     // The email of the user's account used.
+        //     var email = error.email;
+        //     // The firebase.auth.AuthCredential type that was used.
+        //     var credential = error.credential;
+        //     // ...
+        // });
 
-  if (ui.isPendingRedirect()) {
-    ui.start('#firebaseui-auth-container', uiConfig);
-  }
+        // if (ui.isPendingRedirect()) {
+        //     ui.start('#firebaseui-auth-container', uiConfig);
+        // }
+//END FIREBASE SIGN-IN WITH POP UP + IF PENDING SNIPPET//
 
   //HERE TO TRACK AUTH STATE ACROSS ALL PAGES:
   initApp = function() {
@@ -101,11 +102,11 @@ firebase.auth().signInWithPopup(provider).then(function(result) {
   //END TRACK AUTH STATE//
   
   //FIREBASE SIGN-OUT:
-  firebase.auth().signOut().then(function() {
-    console.log('SIGN-OUT SUCCESS');
-}).catch(function(error) {
-    console.log(error);
-  });
+        // firebase.auth().signOut().then(function() {
+        //     console.log('SIGN-OUT SUCCESS');
+        // }).catch(function(error) {
+        //     console.log(error);
+        // });
   //END FIREBASE SIGN-OUT//
 
 const database = firebase.database();
