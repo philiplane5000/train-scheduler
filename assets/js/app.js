@@ -73,7 +73,7 @@ let provider = new firebase.auth.GoogleAuthProvider();
         var providerData = user.providerData;
         user.getIdToken().then(function(accessToken) {
           $('#sign-in-status').text('Signed in');
-          $('#sign-in').text('Sign out');
+          $('#sign-in').text('Sign out').on('click', signOut);
           $('#account-details').text(JSON.stringify({
             displayName: displayName,
             email: email,
@@ -101,13 +101,15 @@ let provider = new firebase.auth.GoogleAuthProvider();
   });
   //END TRACK AUTH STATE//
   
-  //FIREBASE SIGN-OUT:
-        // firebase.auth().signOut().then(function() {
-        //     console.log('SIGN-OUT SUCCESS');
-        // }).catch(function(error) {
-        //     console.log(error);
-        // });
-  //END FIREBASE SIGN-OUT//
+//   FIREBASE SIGN-OUT:
+function signOut(){
+    firebase.auth().signOut().then(function() {
+        console.log('SIGN-OUT SUCCESS');
+    }).catch(function(error) {
+        console.log(error);
+    });
+}
+//   END FIREBASE SIGN-OUT//
 
 const database = firebase.database();
 const ref = database.ref();
