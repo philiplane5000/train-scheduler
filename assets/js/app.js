@@ -92,7 +92,7 @@ let provider = new firebase.auth.GoogleAuthProvider();
       } else {
         // User is signed out.
         $('#sign-in-status').text('Signed out');
-        $('#sign-in').text('Sign in');
+        $('#sign-in').append($signOutBtn);
         $('#account-details').text('null');
       }
     }, function(error) {

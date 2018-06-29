@@ -40,7 +40,6 @@
 .add-train-form, .firebase-members-form {
     background: whitesmoke;
     padding: 10px;
-    /* margin-top: 20px; MEDIA QUERY THIS TO SMALLER SCREEN SIZE*/
 
     border-top: 7.5px solid #46B29D;
     border-left: 2.5px solid #46B29D;
