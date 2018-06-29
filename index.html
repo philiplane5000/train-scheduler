@@ -92,52 +92,60 @@
                 </div>
             </div>
             <div class="col-lg-4 col-md-8 col-sm-8">
-                <form class="add-train-form rounded">
-                    <h5 id="add-train-form-head">SUBMIT OR UPDATE TRAINS:</h5>
+                <div class="row">
+                    <div class="col-12">
+                        <form class="add-train-form rounded">
+                            <h5 id="add-train-form-head">SUBMIT OR UPDATE TRAINS:</h5>
 
-                    <div class="input-group input-group-sm mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text form-update-span" id="inputGroup-sizing-sm">NAME OF TRAIN:</span>
-                        </div>
-                        <input type="text" class="form-control" aria-label="NAME OF TRAIN" aria-describedby="inputGroup-sizing-sm" id="train-name">
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text form-update-span" id="inputGroup-sizing-sm">NAME OF TRAIN:</span>
+                                </div>
+                                <input type="text" class="form-control" aria-label="NAME OF TRAIN" aria-describedby="inputGroup-sizing-sm" id="train-name">
+                            </div>
+
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text form-update-span" id="inputGroup-sizing-sm">DESTINATION:</span>
+                                </div>
+                                <input type="text" class="form-control" aria-label="DESTINATION" aria-describedby="inputGroup-sizing-sm" id="dest">
+                            </div>
+
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text form-update-span" id="inputGroup-sizing-sm">FIRST TRAIN DEPARTS: (HH:mm)</span>
+                                </div>
+                                <input type="text" class="form-control" aria-label="FIRST TRAIN DEPARTS" aria-describedby="inputGroup-sizing-sm" id="first-train-time">
+                            </div>
+
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text form-update-span" id="inputGroup-sizing-sm">FREQUENCY:</span>
+                                </div>
+                                <input type="text" class="form-control" aria-label="FIRST TRAIN DEPARTS" aria-describedby="inputGroup-sizing-sm" id="freq">
+                            </div>
+
+                            <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+                            <button type="update" class="btn btn-warning hide" id="update-btn">Update</button>
+                        </form>
                     </div>
-
-                    <div class="input-group input-group-sm mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text form-update-span" id="inputGroup-sizing-sm">DESTINATION:</span>
-                        </div>
-                        <input type="text" class="form-control" aria-label="DESTINATION" aria-describedby="inputGroup-sizing-sm" id="dest">
-                    </div>
-
-                    <div class="input-group input-group-sm mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text form-update-span" id="inputGroup-sizing-sm">FIRST TRAIN DEPARTS: (HH:mm)</span>
-                        </div>
-                        <input type="text" class="form-control" aria-label="FIRST TRAIN DEPARTS" aria-describedby="inputGroup-sizing-sm" id="first-train-time">
-                    </div>
-
-                    <div class="input-group input-group-sm mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text form-update-span" id="inputGroup-sizing-sm">FREQUENCY:</span>
-                        </div>
-                        <input type="text" class="form-control" aria-label="FIRST TRAIN DEPARTS" aria-describedby="inputGroup-sizing-sm" id="freq">
-                    </div>
-
-                    <button type="submit" class="btn btn-primary" id="submit">Submit</button>
-                    <button type="update" class="btn btn-warning hide" id="update-btn">Update</button>
-                </form>
+                </div>
                 <!--FIREBASE AUTHENTICATION SECTION:-->
-            </div>
-            <div class="col-lg-4 col-md-8 col-sm-8">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="firebase-ui-container">
+                            <form class="firebase-members-form rounded">
+                                <h5 id="firebase-members-head">RETURNING MEMBERS LOGIN:</h5>
 
-                <form class="firebase-members-form rounded">
-                    <h5 id="firebase-members-head">RETURNING MEMBERS LOGIN:</h5>
+                                <div id="firebaseui-auth-container"></div>
+                                <div id="sign-in-status"></div>
+                                <div id="sign-in"></div>
+                                <div id="account-details" class="hide"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
 
-                    <div id="firebaseui-auth-container"></div>
-                    <div id="sign-in-status"></div>
-                    <div id="sign-in"></div>
-                    <div id="account-details" class="hide"></div>
-                </form>
             </div>
 
         </div>
