@@ -9,6 +9,58 @@ let config = {
 
 firebase.initializeApp(config);
 
+// FIREBASE AUTH CONFIG COPIED OVER:
+
+// FirebaseUI config.
+var uiConfig = {
+  signInSuccessUrl: 'https://philiptd5000.github.io/train-scheduler/',
+  signInOptions: [
+    // Leave the lines as is for the providers you want to offer your users.
+    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+    // firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+    // firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+    // firebase.auth.GithubAuthProvider.PROVIDER_ID,
+    // firebase.auth.EmailAuthProvider.PROVIDER_ID,
+    // firebase.auth.PhoneAuthProvider.PROVIDER_ID
+  ],
+  // Terms of service url.
+  tosUrl: 'https://www.google.com/'
+};
+
+// Initialize the FirebaseUI Widget using Firebase.
+var ui = new firebaseui.auth.AuthUI(firebase.auth());
+// The start method will wait until the DOM is loaded.
+ui.start('#firebaseui-auth-container', uiConfig);
+
+// END FIREBASE CONFIG//
+
+let provider = new firebase.auth.GoogleAuthProvider();
+
+//FIREBASE SIGN-IN INITIALIZER:
+firebase.auth().signInWithPopup(provider).then(function(result) {
+    // This gives you a Google Access Token. You can use it to access the Google API.
+    var token = result.credential.accessToken;
+    // The signed-in user info.
+    var user = result.user;
+    // ...
+  }).catch(function(error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    // The email of the user's account used.
+    var email = error.email;
+    // The firebase.auth.AuthCredential type that was used.
+    var credential = error.credential;
+    // ...
+  });
+
+  //FIREBASE SIGN-OUT:
+  firebase.auth().signOut().then(function() {
+    // Sign-out successful.
+  }).catch(function(error) {
+    // An error happened.
+  });
+
 const database = firebase.database();
 const ref = database.ref();
 
@@ -207,9 +259,7 @@ $('#update-btn').on('click', function (event) {
         }
       });
     
-
     //HERE WE NEED TO PUSH THE UPDATED TRAIN, USING THE UNIQUE ID THAT HAS BEEN SET GLOBALLY(?)
-
 
     $("#train-name").val("").attr('placeholder', '');
     $("#dest").val("").attr('placeholder', '');

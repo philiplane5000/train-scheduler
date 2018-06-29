@@ -8,6 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
         crossorigin="anonymous">
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.css" />
+    <script src="https://www.gstatic.com/firebasejs/ui/3.1.1/firebase-ui-auth__en.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/3.1.1/firebase-ui-auth.css" />
+
     <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
 </head>
 
@@ -89,49 +94,41 @@
             <div class="col-lg-4 col-md-8 col-sm-8">
                 <form class="add-train-form rounded">
                     <h5 id="add-train-form-head">SUBMIT OR UPDATE TRAINS:</h5>
+
                     <div class="input-group input-group-sm mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text form-update-span" id="inputGroup-sizing-sm">NAME OF TRAIN:</span>
                         </div>
                         <input type="text" class="form-control" aria-label="NAME OF TRAIN" aria-describedby="inputGroup-sizing-sm" id="train-name">
                     </div>
-                    <!-- <div class="form-group">
-                        <label for="train-name">Train Name</label>
-                        <input type="text" class="form-control" id="train-name inputGroup-sizing-sm">
-                    </div> -->
+
                     <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text form-update-span" id="inputGroup-sizing-sm">DESTINATION:</span>
-                            </div>
-                            <input type="text" class="form-control" aria-label="DESTINATION" aria-describedby="inputGroup-sizing-sm" id="dest">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text form-update-span" id="inputGroup-sizing-sm">DESTINATION:</span>
                         </div>
-                    <!-- <div class="form-group">
-                        <label for="destination">Destination</label>
-                        <input type="text" class="form-control" id="dest">
-                    </div> -->
+                        <input type="text" class="form-control" aria-label="DESTINATION" aria-describedby="inputGroup-sizing-sm" id="dest">
+                    </div>
+
                     <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text form-update-span" id="inputGroup-sizing-sm">FIRST TRAIN DEPARTS: (HH:mm)</span>
-                            </div>
-                            <input type="text" class="form-control" aria-label="FIRST TRAIN DEPARTS" aria-describedby="inputGroup-sizing-sm" id="first-train-time">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text form-update-span" id="inputGroup-sizing-sm">FIRST TRAIN DEPARTS: (HH:mm)</span>
                         </div>
-                    <!-- <div class="form-group">
-                        <label for="first-train-time">First Train Time (HH:mm - military time)</label>
-                        <input type="text" class="form-control" id="first-train-time">
-                    </div> -->
+                        <input type="text" class="form-control" aria-label="FIRST TRAIN DEPARTS" aria-describedby="inputGroup-sizing-sm" id="first-train-time">
+                    </div>
+
                     <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text form-update-span" id="inputGroup-sizing-sm">FREQUENCY:</span>
-                            </div>
-                            <input type="text" class="form-control" aria-label="FIRST TRAIN DEPARTS" aria-describedby="inputGroup-sizing-sm" id="freq">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text form-update-span" id="inputGroup-sizing-sm">FREQUENCY:</span>
                         </div>
-                    <!-- <div class="form-group">
-                        <label for="frequency">Frequency</label>
-                        <input type="text" class="form-control" id="freq">
-                    </div> -->
+                        <input type="text" class="form-control" aria-label="FIRST TRAIN DEPARTS" aria-describedby="inputGroup-sizing-sm" id="freq">
+                    </div>
+
                     <button type="submit" class="btn btn-primary" id="submit">Submit</button>
                     <button type="update" class="btn btn-warning hide" id="update-btn">Update</button>
                 </form>
+            </div>
+            <div class="col-4">
+                <div id="firebaseui-auth-container"></div>
             </div>
 
         </div>
