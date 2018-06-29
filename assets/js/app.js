@@ -102,8 +102,8 @@ initApp = function () {
 
 window.addEventListener('load', function () {
     initApp()
-    $('.firebaseui-auth-container').toggleClass('hide');
 });
+
 //END TRACK AUTH STATE//
 
 //   FIREBASE SIGN-OUT:
@@ -114,12 +114,12 @@ function signOut() {
         console.log(error);
     });
 
-    $('.firebaseui-auth-container').toggleClass('hide');
+    $('.firebaseui-auth-container').removeClass('hide');
 }
 //   END FIREBASE SIGN-OUT//
 
 $('.firebaseui-auth-container').on('click', function() {
-    $(this).toggleClass('hide');
+    $(this).addClass('hide');
 })
 
 // END FIREBASE AUTH SETUP //
