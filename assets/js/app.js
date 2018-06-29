@@ -87,7 +87,7 @@ let provider = new firebase.auth.GoogleAuthProvider();
             uid: uid,
             accessToken: accessToken,
             providerData: providerData
-          }, null, '  ');
+          }/*, null, '  '*/);
         });
       } else {
         // User is signed out.
