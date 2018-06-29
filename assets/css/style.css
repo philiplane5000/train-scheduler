@@ -92,13 +92,12 @@
 }
 
 .signed-in-user {
-    margin-left: 20px;
     width: 320px;
     display: block;
 }
 
 .user-profile-pic {
-    margin-left: 5px;
+    margin-left: 0 auto;
     display: block;
     width: 200px;
     height: 200px;
@@ -107,13 +106,13 @@
 }
 
 .display-name {
-    margin-left: 5px;
-    line-height: 35px;
+    text-align: center;
+    line-height: 40px;
     font-weight: 500;
 }
 
 .sign-out-btn {
-    margin-left: 20px;
+    margin-left: 125px;
 }
 /* FIREBASE AUTH UI STYLES END// */
 
