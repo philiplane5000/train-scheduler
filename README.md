@@ -1,5 +1,5 @@
 # TRAIN-SCHEDULER
-###Description 
+### Description: 
 * A `LIVE` train schedule that allows member users to manipulate train schedule.
 
 ### FEATURES:
