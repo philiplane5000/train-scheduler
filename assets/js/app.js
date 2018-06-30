@@ -84,7 +84,7 @@ initApp = function () {
                 //STARTING WITH CONTINER DIV:
                 let $signedInUserDiv = $('<div>').addClass('signed-in-user');
                 //CONTENTS OF DIV HERE:
-                let $userProfilePic = $(`<img src="${photoURL}" class="user-profile-pic">`);
+                let $userProfilePic = $(`<img src="${photoURL}">`).addClass('user-profile-pic');
                 let $userName = $(`<h6 class="display-name">${displayName}</h6>`);
                 let $signOutBtn = $('<button class="btn btn-sm btn-danger">Sign Out</button>')
                     .addClass('sign-out-btn').on('click', signOut);
