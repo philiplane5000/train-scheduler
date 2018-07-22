@@ -1,14 +1,17 @@
 # TRAIN-SCHEDULER
 
-### Description: 
+### DESCRIPTION: 
 
-* A `LIVE` train schedule that allows users to manipulate train schedule.
+* A `LIVE` train schedule that allows users to alter existing or add new train line information.
 
 ### FEATURES:
 
-* `MINUTES AWAY` and `NEXT TRAIN TIME` update every minute without page refresh.
+* `MINUTES AWAY` and `NEXT TRAIN TIME` update every minute according to `REAL` time without page refresh.
 
 * `GOOGLE LOGIN` : Login via google account to `UPDATE` existing or `SUBMIT` new train information. 
+
+  * `FIREBASE` ^ Login created using Firebase
+
 
 <hr>
 
