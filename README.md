@@ -8,7 +8,7 @@
 
 * `MINUTES AWAY` and `NEXT TRAIN TIME` update every minute without page refresh.
 
-* `GOOGLE LOGIN` : Login via google account to UPDATE or SUBMIT new train information. 
+* `GOOGLE LOGIN` : Login via google account to `UPDATE` existing or `SUBMIT` new train information. 
 
 <hr>
 
