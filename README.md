@@ -10,8 +10,13 @@
 
 * `GOOGLE LOGIN` : Login via google account to `UPDATE` existing or `SUBMIT` new train information. 
 
-  * `FIREBASE` ^ Login created using Firebase
+### TECHNOLOGIES LISTED:
 
+* Firebase (User Authentication)
+* Moment.js
+* HTML5
+* CSS3
+* Javascript
 
 <hr>
 
